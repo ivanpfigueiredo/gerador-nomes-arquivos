@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Nomes de Arquivos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input {
+            margin-top: 5px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .output {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de Nomes de Arquivos</h1>
+    <form id="fileNameForm">
+        <label for="local">Local:</label>
+        <input type="text" id="local" name="local">
+
+        <label for="data">Data (DD-MM-AAAA):</label>
+        <input type="text" id="data" name="data">
+
+        <label for="hora">Hora (HHMM):</label>
+        <input type="text" id="hora" name="hora">
+
+        <label for="sequencia">Sequência:</label>
+        <input type="text" id="sequencia" name="sequencia">
+
+        <label for="procedimento">Procedimento:</label>
+        <input type="text" id="procedimento" name="procedimento">
+
+        <button type="button" onclick="gerarNomeArquivo()">Gerar Nome do Arquivo</button>
+    </form>
+
+    <div class="output" id="output"></div>
+
+    <script>
+        function removerAcentos(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function gerarNomeArquivo() {
+            const local = removerAcentos(document.getElementById('local').value.toUpperCase());
+            const data = removerAcentos(document.getElementById('data').value.toUpperCase());
+            const hora = removerAcentos(document.getElementById('hora').value.toUpperCase());
+            const sequencia = removerAcentos(document.getElementById('sequencia').value.toUpperCase());
+            const procedimento = removerAcentos(document.getElementById('procedimento').value.toUpperCase());
+
+            const nomeArquivo = `${local}_${data}_${hora}_${sequencia}_${procedimento}`;
+            document.getElementById('output').innerText = `Nome do arquivo: ${nomeArquivo}`;
+        }
+    </script>
+</body>
+</html>
+
